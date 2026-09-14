@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://d2amptui5ogkf"]
+
+[ext_resource type="Texture2D" uid="uid://bneax5g8y8nc5" path="res://assets/background.jpg" id="1_b6bv0"]
+[ext_resource type="Script" uid="uid://dtq1h2limls5w" path="res://scripts/levels/main.gd" id="1_ubwgw"]
+[ext_resource type="PackedScene" uid="uid://dtpfl0lpgtdwx" path="res://scenes/characters/player.tscn" id="2_ubwgw"]
+[ext_resource type="PackedScene" uid="uid://c4nrchkh2de5u" path="res://scenes/EnemySpawner.tscn" id="3_vkq25"]
+[ext_resource type="Script" uid="uid://elyx4mmrv705" path="res://scripts/exp_bar.gd" id="4_7lrji"]
+[ext_resource type="PackedScene" uid="uid://csk0nx30ie4gh" path="res://scenes/level_up_menu.tscn" id="5_rssyh"]
+[ext_resource type="AudioStream" uid="uid://djratn6eedvsb" path="res://assets/music/background_music.ogg" id="6_hwp66"]
+
+[node name="Main" type="Node2D" unique_id=947863734]
+script = ExtResource("1_ubwgw")
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=666685555]
+repeat_size = Vector2(640, 480)
+repeat_times = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=1507232878]
+texture = ExtResource("1_b6bv0")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1513437437]
+
+[node name="Player" parent="CharacterBody2D" unique_id=1640654297 instance=ExtResource("2_ubwgw")]
+
+[node name="Node2D" type="Node2D" parent="." unique_id=994969870]
+
+[node name="EnemySpawner" parent="Node2D" unique_id=631664602 instance=ExtResource("3_vkq25")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1367489242]
+
+[node name="EXPBar" type="ProgressBar" parent="CanvasLayer" unique_id=1085851743]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 27.0
+grow_horizontal = 2
+script = ExtResource("4_7lrji")
+
+[node name="LevelUpMenu" parent="CanvasLayer" unique_id=1428408615 instance=ExtResource("5_rssyh")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1209969161]
+stream = ExtResource("6_hwp66")
+autoplay = true
