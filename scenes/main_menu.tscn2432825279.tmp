@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://bxefsdmo68ytr"]
+
+[ext_resource type="Script" uid="uid://c15vjfd2mgvt0" path="res://scripts/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="Texture2D" uid="uid://5hwp10co3p33" path="res://assets/main_menu/background.jpg" id="2_rtw2f"]
+[ext_resource type="Texture2D" uid="uid://paojpayfonpb" path="res://assets/main_menu/intro_image.png" id="3_bqqt6"]
+[ext_resource type="Texture2D" uid="uid://e5w0u0f8qyg0" path="res://assets/main_menu/play.png" id="4_rtw2f"]
+[ext_resource type="Texture2D" uid="uid://b5gsururut3hn" path="res://assets/main_menu/settings.png" id="5_oa1go"]
+[ext_resource type="Texture2D" uid="uid://bnkgwmq2y8sis" path="res://assets/main_menu/quit.png" id="6_tbmy8"]
+
+[node name="MainMenu" type="Control" unique_id=1642564876]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l6cm7")
+
+[node name="Background" type="TextureRect" parent="." unique_id=1432304950]
+layout_mode = 0
+offset_left = -1.0
+offset_top = -2.0
+offset_right = 1151.0
+offset_bottom = 645.0
+texture = ExtResource("2_rtw2f")
+
+[node name="IntroImage" type="TextureRect" parent="." unique_id=1953077284]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -198.5
+offset_right = 198.5
+offset_bottom = 397.0
+grow_horizontal = 2
+texture = ExtResource("3_bqqt6")
+
+[node name="UIContainer" type="VBoxContainer" parent="." unique_id=1986770946]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -1345.0
+offset_right = -813.0
+offset_bottom = 606.0
+grow_horizontal = 2
+
+[node name="MenuButtons" type="VBoxContainer" parent="." unique_id=819026699]
+layout_mode = 0
+offset_left = 310.0
+offset_right = 842.0
+alignment = 1
+
+[node name="QuitButton" type="Button" parent="." unique_id=458035247]
+layout_mode = 0
+offset_left = 451.0
+offset_top = 525.0
+offset_right = 698.0
+offset_bottom = 597.0
+icon = ExtResource("6_tbmy8")
+icon_alignment = 1
+
+[node name="SettingsButton" type="Button" parent="." unique_id=388669640]
+layout_mode = 0
+offset_left = 451.0
+offset_top = 445.0
+offset_right = 698.0
+offset_bottom = 519.0
+icon = ExtResource("5_oa1go")
+icon_alignment = 1
+
+[node name="PlayButton" type="Button" parent="." unique_id=745821453]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = 31.0
+offset_right = 125.0
+offset_bottom = 117.0
+grow_horizontal = 2
+grow_vertical = 2
+icon = ExtResource("4_rtw2f")
+icon_alignment = 1
+
+[node name="LoadingBar" type="ProgressBar" parent="." unique_id=1712527268]
+layout_mode = 0
+offset_left = 322.0
+offset_top = 614.0
+offset_right = 854.0
+offset_bottom = 641.0

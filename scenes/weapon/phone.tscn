@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://cjf3ppd8jfpum"]
+
+[ext_resource type="Script" uid="uid://bx0efcybj4skw" path="res://scripts/weapon/phone.gd" id="1_rurnh"]
+[ext_resource type="Texture2D" uid="uid://c5lhjei2sag0i" path="res://assets/sprites/weapons/phone/phone2.png" id="2_rurnh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1vivr"]
+radius = 158.05063
+
+[node name="Phone" type="Node2D" unique_id=275874604]
+script = ExtResource("1_rurnh")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=956707032]
+modulate = Color(1, 1, 1, 0.24705882)
+position = Vector2(-7.0000305, -23)
+scale = Vector2(0.54772377, 0.570562)
+texture = ExtResource("2_rurnh")
+
+[node name="FearArea" type="Area2D" parent="." unique_id=630090484]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FearArea" unique_id=357047790]
+position = Vector2(-4, -12)
+shape = SubResource("CircleShape2D_1vivr")
+
+[node name="RingTimer" type="Timer" parent="." unique_id=1311498772]
+wait_time = 4.0
+autostart = true
