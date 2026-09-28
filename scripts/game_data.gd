@@ -3,6 +3,43 @@ extends Node
 signal gold_changed(total_gold: int)
 
 const SAVE_PATH := "user://profile.cfg"
+const MAPS := {
+	"map_1": {
+		"name": "Bản đồ hiện tại",
+		"description": "Khu vực khởi đầu",
+		"background_path": "res://assets/background.jpg"
+	},
+	"map_2": {
+		"name": "Bản đồ mới 1",
+		"description": "Khu vực mới",
+		"background_path": "res://assets/nenmoi1.png"
+	},
+	"map_3": {
+		"name": "Bản đồ mới 2",
+		"description": "Khu vực mới",
+		"background_path": "res://assets/nenmoi2.png"
+	}
+}
+const DIFFICULTIES := {
+	"easy": {
+		"name": "Dễ",
+		"spawn_interval": 3.0,
+		"batch_size": 3,
+		"description": "3 quái mỗi 3 giây"
+	},
+	"hard": {
+		"name": "Khó",
+		"spawn_interval": 2.0,
+		"batch_size": 5,
+		"description": "5 quái mỗi 2 giây"
+	},
+	"super_hard": {
+		"name": "Siêu khó",
+		"spawn_interval": 1.2,
+		"batch_size": 7,
+		"description": "7 quái mỗi 1,2 giây"
+	}
+}
 const CHARACTERS := {
 	"default": {
 		"name": "Nhân vật mặc định",
@@ -23,6 +60,8 @@ const CHARACTERS := {
 var gold: int = 0
 var unlocked_characters: Array[String] = ["default"]
 var selected_character_id: String = "default"
+var selected_map_id: String = "map_1"
+var selected_difficulty_id: String = "hard"
 
 func _ready() -> void:
 	_load_profile()
@@ -59,6 +98,20 @@ func select_character(character_id: String) -> bool:
 	_save_profile()
 	return true
 
+func select_map(map_id: String) -> bool:
+	if not MAPS.has(map_id):
+		return false
+	selected_map_id = map_id
+	_save_profile()
+	return true
+
+func select_difficulty(difficulty_id: String) -> bool:
+	if not DIFFICULTIES.has(difficulty_id):
+		return false
+	selected_difficulty_id = difficulty_id
+	_save_profile()
+	return true
+
 func _load_profile() -> void:
 	var config := ConfigFile.new()
 	if config.load(SAVE_PATH) != OK:
@@ -76,10 +129,16 @@ func _load_profile() -> void:
 
 	var saved_selection: String = config.get_value("profile", "selected_character_id", "default")
 	selected_character_id = saved_selection if is_character_unlocked(saved_selection) else "default"
+	var saved_map: String = config.get_value("profile", "selected_map_id", "map_1")
+	selected_map_id = saved_map if MAPS.has(saved_map) else "map_1"
+	var saved_difficulty: String = config.get_value("profile", "selected_difficulty_id", "hard")
+	selected_difficulty_id = saved_difficulty if DIFFICULTIES.has(saved_difficulty) else "hard"
 
 func _save_profile() -> void:
 	var config := ConfigFile.new()
 	config.set_value("profile", "gold", gold)
 	config.set_value("profile", "unlocked_characters", unlocked_characters)
 	config.set_value("profile", "selected_character_id", selected_character_id)
+	config.set_value("profile", "selected_map_id", selected_map_id)
+	config.set_value("profile", "selected_difficulty_id", selected_difficulty_id)
 	config.save(SAVE_PATH)

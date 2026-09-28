@@ -9,6 +9,14 @@ var enemy_scene = preload("res://scenes/enemies/enemy.tscn")
 
 func _ready() -> void:
 	timer.timeout.connect(_on_timer_timeout)
+	timer.stop()
+	var difficulty: Dictionary = GameData.DIFFICULTIES.get(
+		GameData.selected_difficulty_id,
+		GameData.DIFFICULTIES["hard"]
+	)
+	timer.wait_time = difficulty.get("spawn_interval", 2.0)
+	batch_size = difficulty.get("batch_size", 5)
+	timer.start()
 
 func _on_timer_timeout() -> void:
 	var player = get_tree().get_first_node_in_group("player")

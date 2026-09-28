@@ -1,7 +1,7 @@
 extends Control
 
 const MAIN_MENU_PATH := "res://scenes/levels/main_menu.tscn"
-const GAME_SCENE_PATH := "res://scenes/levels/main.tscn"
+const MAP_LOBBY_PATH := "res://scenes/levels/map_lobby.tscn"
 const FALLBACK_PORTRAIT_PATH := "res://assets/sprites/player/character_selection.png"
 
 var character_ids: Array[String] = []
@@ -199,4 +199,4 @@ func _on_back_pressed() -> void:
 	get_tree().change_scene_to_file(MAIN_MENU_PATH)
 
 func _on_start_pressed() -> void:
-	get_tree().change_scene_to_file(GAME_SCENE_PATH)
+	get_tree().change_scene_to_file(MAP_LOBBY_PATH)

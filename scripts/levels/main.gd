@@ -5,6 +5,7 @@ extends Node2D
 @onready var gold_label: Label = $CanvasLayer/GoldLabel
 
 func _ready() -> void:
+	_apply_selected_map()
 	_update_gold_label(GameData.gold)
 	GameData.gold_changed.connect(_update_gold_label)
 
@@ -25,3 +26,29 @@ func _on_upgrade_selected(chosen_data: Dictionary) -> void:
 
 func _update_gold_label(total_gold: int) -> void:
 	gold_label.text = "Vàng: %d" % total_gold
+
+func _apply_selected_map() -> void:
+	var map_data: Dictionary = GameData.MAPS.get(GameData.selected_map_id, GameData.MAPS["map_1"])
+	var background_path: String = map_data.get("background_path", "")
+	if background_path.is_empty() or not ResourceLoader.exists(background_path):
+		return
+
+	var source_texture := load(background_path) as Texture2D
+	if not source_texture:
+		return
+
+	var target_size := Vector2(640.0, 480.0)
+	var source_size := source_texture.get_size()
+	var crop_size := source_size
+	var target_ratio := target_size.x / target_size.y
+	if source_size.x / source_size.y > target_ratio:
+		crop_size.x = source_size.y * target_ratio
+	else:
+		crop_size.y = source_size.x / target_ratio
+
+	var atlas := AtlasTexture.new()
+	atlas.atlas = source_texture
+	atlas.region = Rect2((source_size - crop_size) * 0.5, crop_size)
+	var background: Sprite2D = $Parallax2D/Sprite2D
+	background.texture = atlas
+	background.scale = target_size / crop_size
