@@ -52,6 +52,8 @@ func _process(delta: float) -> void:
 func _on_attack_cooldown() -> void:
 	if animation_player:
 		animation_player.play("swing")
+	if not get_tree().get_nodes_in_group("enemies").is_empty() and player and player.has_method("play_attack_animation"):
+		player.play_attack_animation()
 
 # Các hàm gọi trực tiếp từ AnimationPlayer bằng "Call Method Track"
 func enable_hitbox() -> void:

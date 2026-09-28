@@ -6,6 +6,9 @@ extends BaseCharacter
 
 var idle_time_counter: float = 0.0
 const IDLE_TIMEOUT: float = 0.5 
+var attack_animation_timer: float = 0.0
+var jump_animation_timer: float = 0.0
+var jump_key_down: bool = false
 
 signal exp_changed(current_exp: int, max_exp: int)
 signal player_leveled_up(current_level: int)
@@ -17,8 +20,55 @@ var level: int = 1
 func _ready() -> void:
 	super._ready() # Khởi tạo máu và bộ đếm i-frame từ BaseCharacter
 	add_to_group("player")
+	_apply_selected_character_texture()
 	if animated_sprite:
 		animated_sprite.play("default")
+
+func _apply_selected_character_texture() -> void:
+	if not animated_sprite:
+		return
+	var character: Dictionary = GameData.CHARACTERS.get(GameData.selected_character_id, {})
+	if character.is_empty():
+		return
+	var normal_path: String = character.get("normal_path", character.get("sprite_path", ""))
+	var animation_paths := {
+		"default": normal_path,
+		"run": character.get("run_path", normal_path),
+		"lobby": normal_path,
+		"attack": character.get("attack_path", ""),
+		"jump": character.get("jump_path", "")
+	}
+	var frames := animated_sprite.sprite_frames.duplicate() as SpriteFrames
+	animated_sprite.sprite_frames = frames
+	for animation_name in animation_paths:
+		var texture_path: String = animation_paths[animation_name]
+		if texture_path.is_empty() or not ResourceLoader.exists(texture_path):
+			continue
+		var texture := load(texture_path) as Texture2D
+		if not texture:
+			continue
+		if not frames.has_animation(animation_name):
+			frames.add_animation(animation_name)
+		frames.clear(animation_name)
+		frames.add_frame(animation_name, texture)
+		frames.set_animation_speed(animation_name, 8.0)
+		frames.set_animation_loop(animation_name, not ["attack", "jump"].has(animation_name))
+
+func play_attack_animation() -> void:
+	if not animated_sprite or not animated_sprite.sprite_frames.has_animation("attack"):
+		return
+	attack_animation_timer = 0.25
+	jump_animation_timer = 0.0
+	idle_time_counter = IDLE_TIMEOUT
+	animated_sprite.play("attack")
+
+func play_jump_animation() -> void:
+	if not animated_sprite or not animated_sprite.sprite_frames.has_animation("jump"):
+		return
+	jump_animation_timer = 0.4
+	attack_animation_timer = 0.0
+	idle_time_counter = IDLE_TIMEOUT
+	animated_sprite.play("jump")
 
 func add_exp(amount: int) -> void:
 	current_exp += amount
@@ -74,6 +124,12 @@ func take_damage(amount: int) -> void:
 
 func _physics_process(delta: float) -> void:
 	super._physics_process(delta) # Giữ bộ đếm thời gian i-frame của BaseCharacter chạy
+	var jump_pressed := Input.is_key_pressed(KEY_SPACE)
+	if jump_pressed and not jump_key_down:
+		play_jump_animation()
+	jump_key_down = jump_pressed
+	attack_animation_timer = maxf(0.0, attack_animation_timer - delta)
+	jump_animation_timer = maxf(0.0, jump_animation_timer - delta)
 	
 	var direction = Vector2.ZERO
 	if Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_LEFT): direction.x -= 1
@@ -83,7 +139,12 @@ func _physics_process(delta: float) -> void:
 		
 	direction = direction.normalized()
 	
-	if direction != Vector2.ZERO:
+	if jump_animation_timer > 0.0:
+		pass
+	elif attack_animation_timer > 0.0:
+		if animated_sprite and animated_sprite.animation != "attack":
+			animated_sprite.play("attack")
+	elif direction != Vector2.ZERO:
 		idle_time_counter = 0.0
 		velocity = direction * speed
 		if animated_sprite:

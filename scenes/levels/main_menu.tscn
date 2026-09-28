@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://1daw5f4q3m7n" path="res://assets/main_menu/quit.png" id="4_cn35j"]
 [ext_resource type="Texture2D" uid="uid://dtvhkyvt6ummn" path="res://assets/main_menu/settings.png" id="5_wko7x"]
 [ext_resource type="Texture2D" uid="uid://duiuqwev81lgh" path="res://assets/main_menu/play.png" id="6_pwqr4"]
+[ext_resource type="Script" uid="uid://danfqqpcvoiah" path="res://scenes/levels/sound_toggle.gd" id="7_crctu"]
 
 [node name="MainMenu" type="Control" unique_id=1642564876]
 layout_mode = 3
@@ -104,3 +105,13 @@ offset_top = -27.0
 offset_right = 266.0
 grow_horizontal = 2
 grow_vertical = 0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1134660712]
+
+[node name="SoundToggle" type="CheckButton" parent="CanvasLayer" unique_id=574473496]
+offset_left = 23.0
+offset_top = 14.0
+offset_right = 77.0
+offset_bottom = 43.0
+text = "Âm thanh "
+script = ExtResource("7_crctu")

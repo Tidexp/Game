@@ -14,6 +14,10 @@ var fear_source_pos: Vector2 = Vector2.ZERO
 
 # Quái rơi EXP khi chết
 var exp_gem_scene: PackedScene = preload("res://scenes/objects/exp_gem.tscn")
+var gold_coin_scene: PackedScene = preload("res://scenes/objects/gold_coin.tscn")
+@export_range(0.0, 1.0) var gold_drop_chance: float = 0.4
+@export var gold_drop_min: int = 5
+@export var gold_drop_max: int = 10
 
 var player: Node2D = null
 var is_dead: bool = false
@@ -110,7 +114,12 @@ func take_damage(amount: int) -> void:
 		die()
 
 func die() -> void:
-	if exp_gem_scene:
+	if gold_coin_scene and randf() < gold_drop_chance:
+		var gold_coin = gold_coin_scene.instantiate()
+		gold_coin.gold_amount = randi_range(gold_drop_min, gold_drop_max)
+		gold_coin.global_position = global_position + Vector2(12, 0)
+		get_tree().current_scene.call_deferred("add_child", gold_coin)
+	elif exp_gem_scene:
 		var exp_gem = exp_gem_scene.instantiate()
 		exp_gem.global_position = global_position
 		get_tree().current_scene.call_deferred("add_child", exp_gem)

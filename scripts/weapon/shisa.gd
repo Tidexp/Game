@@ -49,6 +49,9 @@ func _process(delta: float) -> void:
 				is_attacking = true
 				state_timer = 0.0
 				aim_at_nearest_enemy()
+				var player = get_tree().get_first_node_in_group("player")
+				if player and player.has_method("play_attack_animation"):
+					player.play_attack_animation()
 				# Truyền cả sát thương lẫn scale vào attack_area để tránh bị Tween ghi đè
 				attack_area.start_attack(damage_per_tick, effect_scale)
 

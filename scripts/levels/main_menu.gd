@@ -25,8 +25,7 @@ func _on_loading_complete() -> void:
 		progress_bar.hide() # Ẩn thanh loading sau khi tải xong
 
 func _on_play_pressed() -> void:
-	# Chuyển hướng sang scene game chính của bạn
-	get_tree().change_scene_to_file("res://scenes/levels/main.tscn")
+	get_tree().change_scene_to_file("res://scenes/levels/character_lobby.tscn")
 
 func _on_settings_pressed() -> void:
 	print("Mở giao diện cài đặt âm thanh/đồ họa...")

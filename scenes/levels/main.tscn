@@ -7,6 +7,12 @@
 [ext_resource type="Script" uid="uid://elyx4mmrv705" path="res://scripts/exp_bar.gd" id="4_7lrji"]
 [ext_resource type="PackedScene" uid="uid://csk0nx30ie4gh" path="res://scenes/level_up_menu.tscn" id="5_rssyh"]
 [ext_resource type="AudioStream" uid="uid://djratn6eedvsb" path="res://assets/music/background_music.ogg" id="6_hwp66"]
+[ext_resource type="Script" uid="uid://danfqqpcvoiah" path="res://scenes/levels/sound_toggle.gd" id="7_vkq25"]
+[ext_resource type="Script" uid="uid://dcbmttcdbtk7j" path="res://scenes/levels/danger_zone.gd" id="9_rssyh"]
+[ext_resource type="AudioStream" uid="uid://bfrvekgaunwee" path="res://scenes/levels/hieu_ung_am_thanh_An_tuong-www_tiengdong_com.mp3" id="10_hwp66"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sn8xv"]
+size = Vector2(130, 125)
 
 [node name="Main" type="Node2D" unique_id=947863734]
 script = ExtResource("1_ubwgw")
@@ -35,8 +41,44 @@ offset_bottom = 27.0
 grow_horizontal = 2
 script = ExtResource("4_7lrji")
 
+[node name="GoldLabel" type="Label" parent="CanvasLayer"]
+offset_left = 20.0
+offset_top = 34.0
+offset_right = 190.0
+offset_bottom = 62.0
+theme_override_colors/font_color = Color(1, 0.82, 0.24, 1)
+theme_override_font_sizes/font_size = 20
+text = "Vàng: 0"
+
 [node name="LevelUpMenu" parent="CanvasLayer" unique_id=1428408615 instance=ExtResource("5_rssyh")]
+
+[node name="SoundToggle" type="CheckButton" parent="CanvasLayer" unique_id=559984116]
+offset_left = 1025.0
+offset_top = 33.0
+offset_right = 1154.0
+offset_bottom = 66.0
+text = "Âm thanh "
+script = ExtResource("7_vkq25")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1209969161]
 stream = ExtResource("6_hwp66")
 autoplay = true
+bus = &"BG"
+
+[node name="DangerZone" type="Area2D" parent="." unique_id=1906583541]
+collision_layer = 7
+collision_mask = 7
+script = ExtResource("9_rssyh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DangerZone" unique_id=2017701143]
+position = Vector2(918, 308.5)
+shape = SubResource("RectangleShape2D_sn8xv")
+
+[node name="ColorRect" type="ColorRect" parent="DangerZone" unique_id=1091293385]
+offset_left = 858.0
+offset_top = 246.0
+offset_right = 974.0
+offset_bottom = 363.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="DangerZone" unique_id=151321416]
+stream = ExtResource("10_hwp66")

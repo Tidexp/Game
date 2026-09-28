@@ -32,6 +32,9 @@ func attack() -> void:
 	var enemies = get_tree().get_nodes_in_group("enemies")
 	if enemies.is_empty():
 		return
+	var player = get_tree().get_first_node_in_group("player")
+	if player and player.has_method("play_attack_animation"):
+		player.play_attack_animation()
 		
 	# Tìm quái gần nhất
 	var nearest_enemy = enemies[0]
