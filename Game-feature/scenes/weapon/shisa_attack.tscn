@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bowbreypop7m0"]
+
+[ext_resource type="Script" uid="uid://bkiwekfd34arj" path="res://scripts/weapon/shisa_attack.gd" id="1_gplon"]
+[ext_resource type="Texture2D" uid="uid://bw0jhl8e1ve7j" path="res://assets/sprites/weapons/shisa/shisa_attack.png" id="1_roxmu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nq3kj"]
+size = Vector2(257.75, 176)
+
+[node name="ShisaAttack" type="Area2D" unique_id=1644844396]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_gplon")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=135477565]
+position = Vector2(129, 2)
+shape = SubResource("RectangleShape2D_nq3kj")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1694329949]
+position = Vector2(141.00002, 9.999998)
+scale = Vector2(1.4380165, 1.1903553)
+texture = ExtResource("1_roxmu")

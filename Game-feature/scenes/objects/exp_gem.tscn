@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dgo5clw7gy7po"]
+
+[ext_resource type="Script" uid="uid://4jwmdsagvhim" path="res://scripts/objects/exp_gem.gd" id="1_q6qae"]
+[ext_resource type="Texture2D" uid="uid://bboo1f3uhmgn" path="res://assets/sprites/exp_gem/exp_gem.png" id="2_mbehg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nq3kj"]
+size = Vector2(48, 66)
+
+[node name="ExpGem" type="Area2D" unique_id=453625485]
+script = ExtResource("1_q6qae")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=625812878]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_mbehg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1102710680]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_nq3kj")

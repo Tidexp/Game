@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://0asm20bxsokr"]
+
+[ext_resource type="Script" uid="uid://0osvtixvl3ci" path="res://scripts/weapon/sugarcane_attack.gd" id="1_d8omv"]
+[ext_resource type="Texture2D" uid="uid://1rf8vowa61se" path="res://assets/sprites/weapons/sugarcane/sugarcane.png" id="2_8aitk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b3kus"]
+size = Vector2(46, 46)
+
+[node name="Bullet" type="Area2D" unique_id=1832121243]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_d8omv")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=651450960]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_8aitk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1971378387]
+shape = SubResource("RectangleShape2D_b3kus")

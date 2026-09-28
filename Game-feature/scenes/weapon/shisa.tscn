@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://e58shcnx3kgw"]
+
+[ext_resource type="Script" uid="uid://c0lsrp66ikdr8" path="res://scripts/weapon/shisa.gd" id="1_cdn5p"]
+[ext_resource type="PackedScene" uid="uid://bowbreypop7m0" path="res://scenes/weapon/shisa_attack.tscn" id="2_xv35d"]
+
+[node name="Shisa" type="Node2D" unique_id=1968231327]
+script = ExtResource("1_cdn5p")
+
+[node name="ShisaAttack" parent="." unique_id=1644844396 instance=ExtResource("2_xv35d")]

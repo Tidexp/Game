@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://d2amptui5ogkf"]
+
+[ext_resource type="Texture2D" uid="uid://bneax5g8y8nc5" path="res://assets/background.jpg" id="1_b6bv0"]
+[ext_resource type="Script" uid="uid://dtq1h2limls5w" path="res://scripts/levels/main.gd" id="1_ubwgw"]
+[ext_resource type="PackedScene" uid="uid://dtpfl0lpgtdwx" path="res://scenes/characters/player.tscn" id="2_ubwgw"]
+[ext_resource type="PackedScene" uid="uid://c4nrchkh2de5u" path="res://scenes/EnemySpawner.tscn" id="3_vkq25"]
+[ext_resource type="Script" uid="uid://elyx4mmrv705" path="res://scripts/exp_bar.gd" id="4_7lrji"]
+[ext_resource type="PackedScene" uid="uid://csk0nx30ie4gh" path="res://scenes/level_up_menu.tscn" id="5_rssyh"]
+[ext_resource type="AudioStream" uid="uid://djratn6eedvsb" path="res://assets/music/background_music.ogg" id="6_hwp66"]
+[ext_resource type="Script" uid="uid://danfqqpcvoiah" path="res://scenes/levels/sound_toggle.gd" id="7_vkq25"]
+[ext_resource type="Script" uid="uid://dcbmttcdbtk7j" path="res://scenes/levels/danger_zone.gd" id="9_rssyh"]
+[ext_resource type="AudioStream" uid="uid://bfrvekgaunwee" path="res://scenes/levels/hieu_ung_am_thanh_An_tuong-www_tiengdong_com.mp3" id="10_hwp66"]
+[ext_resource type="Script" uid="uid://g53381nb5vhv" path="res://scripts/survival_manager.gd" id="11_hwp66"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sn8xv"]
+size = Vector2(130, 125)
+
+[node name="Main" type="Node2D" unique_id=947863734]
+script = ExtResource("1_ubwgw")
+
+[node name="Parallax2D" type="Parallax2D" parent="." unique_id=666685555]
+repeat_size = Vector2(640, 480)
+repeat_times = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="Parallax2D" unique_id=1507232878]
+texture = ExtResource("1_b6bv0")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1513437437]
+
+[node name="Player" parent="CharacterBody2D" unique_id=1640654297 instance=ExtResource("2_ubwgw")]
+
+[node name="Node2D" type="Node2D" parent="." unique_id=994969870]
+
+[node name="EnemySpawner" parent="Node2D" unique_id=631664602 instance=ExtResource("3_vkq25")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1367489242]
+
+[node name="EXPBar" type="ProgressBar" parent="CanvasLayer" unique_id=1085851743]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 27.0
+grow_horizontal = 2
+script = ExtResource("4_7lrji")
+
+[node name="GoldLabel" type="Label" parent="CanvasLayer" unique_id=2139375251]
+offset_left = 20.0
+offset_top = 34.0
+offset_right = 190.0
+offset_bottom = 62.0
+theme_override_colors/font_color = Color(1, 0.82, 0.24, 1)
+theme_override_font_sizes/font_size = 20
+text = "Vàng: 0"
+
+[node name="LevelUpMenu" parent="CanvasLayer" unique_id=1428408615 instance=ExtResource("5_rssyh")]
+
+[node name="SoundToggle" type="CheckButton" parent="CanvasLayer" unique_id=559984116]
+offset_left = 1025.0
+offset_top = 33.0
+offset_right = 1154.0
+offset_bottom = 66.0
+text = "Âm thanh "
+script = ExtResource("7_vkq25")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1209969161]
+stream = ExtResource("6_hwp66")
+autoplay = true
+bus = &"BG"
+
+[node name="DangerZone" type="Area2D" parent="." unique_id=1906583541]
+collision_layer = 7
+collision_mask = 7
+script = ExtResource("9_rssyh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DangerZone" unique_id=2017701143]
+position = Vector2(918, 308.5)
+shape = SubResource("RectangleShape2D_sn8xv")
+
+[node name="ColorRect" type="ColorRect" parent="DangerZone" unique_id=1091293385]
+offset_left = 858.0
+offset_top = 246.0
+offset_right = 974.0
+offset_bottom = 363.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="DangerZone" unique_id=151321416]
+stream = ExtResource("10_hwp66")
+
+[node name="SurvivalManager" type="Node" parent="." unique_id=232026547]
+script = ExtResource("11_hwp66")
