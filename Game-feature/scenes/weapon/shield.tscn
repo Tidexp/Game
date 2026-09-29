@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://n1w4cl6rfx8v"]
+
+[ext_resource type="Script" uid="uid://dqa4i2gxdwtaf" path="res://scripts/weapon/shield.gd" id="1_g4k48"]
+[ext_resource type="Texture2D" uid="uid://caopr0nr3r12v" path="res://assets/sprites/weapons/shield/shield.png" id="2_d677h"]
+
+[node name="Shield" type="Node2D" unique_id=902921550]
+script = ExtResource("1_g4k48")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1671145866]
+modulate = Color(0.9684872, 0.9684872, 0.9684872, 1)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_d677h")

@@ -1,0 +1,89 @@
+[gd_scene format=3 uid="uid://dtpfl0lpgtdwx"]
+
+[ext_resource type="Script" uid="uid://dqy3umx0h2kbb" path="res://scripts/characters/player.gd" id="1_qlg0r"]
+[ext_resource type="Texture2D" uid="uid://c7hh01obn418t" path="res://assets/sprites/player/attack.png" id="2_2hs0m"]
+[ext_resource type="Texture2D" uid="uid://dte3yhgx6e20u" path="res://assets/sprites/player/normal.png" id="3_1jxqw"]
+[ext_resource type="Texture2D" uid="uid://dhadxq5sfefwx" path="res://assets/sprites/player/character_selection.png" id="4_dw050"]
+[ext_resource type="Texture2D" uid="uid://cfbau0yvr0uhy" path="res://assets/sprites/player/run.png" id="5_b26j0"]
+[ext_resource type="PackedScene" uid="uid://b3mqhwjta6idx" path="res://scenes/weapon/sugarcane.tscn" id="6_kqtwu"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b3kus"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_2hs0m")
+}],
+"loop": 1,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_1jxqw")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_dw050")
+}],
+"loop": 1,
+"name": &"lobby",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_b26j0")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8e3ao"]
+size = Vector2(43, 107)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qlg0r"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tuyoq"]
+bg_color = Color(1, 0, 0, 1)
+
+[node name="Player" type="CharacterBody2D" unique_id=1640654297 groups=["player"]]
+script = ExtResource("1_qlg0r")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1972297476]
+scale = Vector2(0.3, 0.3)
+sprite_frames = SubResource("SpriteFrames_b3kus")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1118883363]
+position = Vector2(0.5, 2.5)
+shape = SubResource("RectangleShape2D_8e3ao")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2031811180]
+limit_smoothed = true
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=1301625876]
+offset_left = -32.0
+offset_top = -74.0
+offset_right = 39.0
+offset_bottom = -55.0
+theme_override_styles/background = SubResource("StyleBoxFlat_qlg0r")
+theme_override_styles/fill = SubResource("StyleBoxFlat_tuyoq")
+show_percentage = false
+
+[node name="HealthLabel" type="Label" parent="HealthBar" unique_id=2068089859]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Weapons" type="Node2D" parent="." unique_id=942515429]
+
+[node name="Sugarcane" parent="Weapons" unique_id=1139196063 instance=ExtResource("6_kqtwu")]

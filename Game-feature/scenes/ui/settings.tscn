@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://b7byfqn1oq3ge"]
+
+[ext_resource type="Script" uid="uid://d1jb6mmfm3yok" path="res://scenes/ui/settings.gd" id="1_8wfqe"]
+
+[node name="SettingsMenu" type="Control" unique_id=54080534]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 3.0
+offset_right = 3.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8wfqe")
+
+[node name="Label" type="Label" parent="." unique_id=880139032]
+layout_mode = 0
+offset_left = 166.0
+offset_top = 13.0
+offset_right = 320.0
+offset_bottom = 36.0
+text = "CÀI ĐẶT ÂM LƯỢNG"
+
+[node name="MasterSlider" type="HSlider" parent="." unique_id=880273635]
+layout_mode = 0
+offset_left = 100.0
+offset_top = 85.0
+offset_right = 420.0
+offset_bottom = 101.0
+
+[node name="BtnBack" type="Button" parent="." unique_id=380756107]
+layout_mode = 0
+offset_left = 215.0
+offset_top = 144.0
+offset_right = 308.0
+offset_bottom = 213.0
+text = "quay lại"
