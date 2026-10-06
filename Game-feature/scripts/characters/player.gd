@@ -12,6 +12,7 @@ var jump_key_down: bool = false
 
 signal exp_changed(current_exp: int, max_exp: int)
 signal player_leveled_up(current_level: int)
+signal weapons_changed
 
 var current_exp: int = 0
 var max_exp: int = 50
@@ -23,6 +24,7 @@ func _ready() -> void:
 	_apply_selected_character_texture()
 	if animated_sprite:
 		animated_sprite.play("default")
+	weapons_changed.emit()
 
 func _apply_selected_character_texture() -> void:
 	if not animated_sprite:
@@ -106,6 +108,7 @@ func apply_upgrade(data: Dictionary) -> void:
 					update_health_ui()
 			elif data["id"] == "speed":
 				speed *= 1.15
+	weapons_changed.emit()
 
 # --- HÀM NHẬN SÁT THƯƠNG (TÍNH GIẢM SÁT THƯƠNG TỪ KHIÊN + DÙNG I-FRAME GỐC) ---
 func take_damage(amount: int) -> void:

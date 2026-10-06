@@ -62,6 +62,7 @@ var unlocked_characters: Array[String] = ["default"]
 var selected_character_id: String = "default"
 var selected_map_id: String = "map_1"
 var selected_difficulty_id: String = "hard"
+var completed_runs: Array[Dictionary] = []
 
 func _ready() -> void:
 	_load_profile()
@@ -112,6 +113,19 @@ func select_difficulty(difficulty_id: String) -> bool:
 	_save_profile()
 	return true
 
+func record_completed_run(map_id: String, difficulty_id: String, survival_seconds: int) -> void:
+	if not MAPS.has(map_id) or not DIFFICULTIES.has(difficulty_id):
+		return
+	completed_runs.push_front({
+		"map_id": map_id,
+		"difficulty_id": difficulty_id,
+		"survival_seconds": survival_seconds,
+		"completed_at": int(Time.get_unix_time_from_system())
+	})
+	if completed_runs.size() > 50:
+		completed_runs.resize(50)
+	_save_profile()
+
 func _load_profile() -> void:
 	var config := ConfigFile.new()
 	if config.load(SAVE_PATH) != OK:
@@ -133,6 +147,13 @@ func _load_profile() -> void:
 	selected_map_id = saved_map if MAPS.has(saved_map) else "map_1"
 	var saved_difficulty: String = config.get_value("profile", "selected_difficulty_id", "hard")
 	selected_difficulty_id = saved_difficulty if DIFFICULTIES.has(saved_difficulty) else "hard"
+	completed_runs.clear()
+	var saved_runs: Array = config.get_value("profile", "completed_runs", [])
+	for run in saved_runs:
+		if run is Dictionary and MAPS.has(run.get("map_id", "")) and DIFFICULTIES.has(run.get("difficulty_id", "")):
+			completed_runs.append(run)
+	if completed_runs.size() > 50:
+		completed_runs.resize(50)
 
 func _save_profile() -> void:
 	var config := ConfigFile.new()
@@ -141,4 +162,5 @@ func _save_profile() -> void:
 	config.set_value("profile", "selected_character_id", selected_character_id)
 	config.set_value("profile", "selected_map_id", selected_map_id)
 	config.set_value("profile", "selected_difficulty_id", selected_difficulty_id)
+	config.set_value("profile", "completed_runs", completed_runs)
 	config.save(SAVE_PATH)

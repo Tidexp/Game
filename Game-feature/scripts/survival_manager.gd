@@ -1,6 +1,6 @@
 extends Node
 
-@export var survival_time: float = 10.0
+@export var survival_time: float = 60.0
 var time_elapsed: float = 0.0
 var is_game_over: bool = false
 
@@ -20,7 +20,8 @@ func _process(delta: float) -> void:
 
 func trigger_win() -> void:
 	is_game_over = true
-	print("Da sinh tồn đủ 10s - WIN GAME!")
+	print("Da sinh tồn đủ 60s - WIN GAME!")
+	GameData.record_completed_run(GameData.selected_map_id, GameData.selected_difficulty_id, int(time_elapsed))
 	
 	# Instantiate bảng Win hiển thị lên màn hình chơi game hiện tại
 	var win_ui = WIN_MENU_SCENE.instantiate()

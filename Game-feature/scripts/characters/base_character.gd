@@ -70,3 +70,6 @@ func die() -> void:
 	modulate.a = 1.0
 	set_physics_process(false)
 	print(name, " đã chết!")
+	if is_in_group("player"):
+		var game_over := preload("res://scripts/ui/game_over.gd").new()
+		get_tree().current_scene.add_child(game_over)

@@ -3,6 +3,13 @@ extends Control
 const MAIN_MENU_PATH := "res://scenes/levels/main_menu.tscn"
 const MAP_LOBBY_PATH := "res://scenes/levels/map_lobby.tscn"
 const FALLBACK_PORTRAIT_PATH := "res://assets/sprites/player/character_selection.png"
+const AVAILABLE_WEAPONS := [
+	{"name": "Bã mía", "icon": "res://assets/sprites/weapons/sugarcane/sugarcane.png", "description": "Phóng mía về phía kẻ địch gần nhất"},
+	{"name": "Shisa", "icon": "res://assets/sprites/weapons/shisa/shisa.png", "description": "Phun làn khói liên tục diện rộng"},
+	{"name": "Cái chày", "icon": "res://assets/sprites/weapons/bat/bat.png", "description": "Vung chày đập mạnh xuống kẻ địch"},
+	{"name": "Khiên", "icon": "res://assets/sprites/weapons/shield/shield.png", "description": "Giảm sát thương nhận vào"},
+	{"name": "Điện thoại", "icon": "res://assets/sprites/weapons/phone/phone1.png", "description": "Vũ khí phòng thủ"}
+]
 
 var character_ids: Array[String] = []
 var selected_index: int = 0
@@ -92,7 +99,7 @@ func _build_ui() -> void:
 
 	var information := VBoxContainer.new()
 	information.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	information.add_theme_constant_override("separation", 16)
+	information.add_theme_constant_override("separation", 10)
 	details.add_child(information)
 
 	var section_label := Label.new()
@@ -110,6 +117,7 @@ func _build_ui() -> void:
 	status_label.add_theme_font_size_override("font_size", 18)
 	status_label.add_theme_color_override("font_color", Color(1.0, 0.82, 0.24))
 	information.add_child(status_label)
+	_add_available_weapons(information)
 
 	var navigation := HBoxContainer.new()
 	navigation.add_theme_constant_override("separation", 12)
@@ -142,6 +150,39 @@ func _build_ui() -> void:
 	start_button.custom_minimum_size = Vector2(220, 52)
 	start_button.pressed.connect(_on_start_pressed)
 	footer.add_child(start_button)
+
+func _add_available_weapons(parent: VBoxContainer) -> void:
+	var heading := Label.new()
+	heading.text = "VŨ KHÍ CÓ SẴN"
+	heading.add_theme_font_size_override("font_size", 14)
+	heading.add_theme_color_override("font_color", Color(0.78, 0.74, 0.64))
+	parent.add_child(heading)
+
+	var weapon_row := HBoxContainer.new()
+	weapon_row.add_theme_constant_override("separation", 6)
+	parent.add_child(weapon_row)
+	for weapon in AVAILABLE_WEAPONS:
+		var weapon_item := VBoxContainer.new()
+		weapon_item.custom_minimum_size = Vector2(58, 68)
+		weapon_item.add_theme_constant_override("separation", 2)
+		weapon_row.add_child(weapon_item)
+
+		var icon := TextureRect.new()
+		icon.custom_minimum_size = Vector2(42, 42)
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		icon.texture = load(weapon["icon"])
+		icon.tooltip_text = "%s: %s" % [weapon["name"], weapon["description"]]
+		weapon_item.add_child(icon)
+
+		var weapon_name := Label.new()
+		weapon_name.text = weapon["name"]
+		weapon_name.custom_minimum_size.x = 58
+		weapon_name.add_theme_font_size_override("font_size", 11)
+		weapon_name.add_theme_color_override("font_color", Color(1.0, 0.96, 0.86))
+		weapon_name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		weapon_name.clip_text = true
+		weapon_item.add_child(weapon_name)
 
 func _make_button(button_text: String) -> Button:
 	var button := Button.new()
